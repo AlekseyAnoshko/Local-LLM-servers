@@ -4,26 +4,15 @@
 
 ## Архитектура
 
-```mermaid
-flowchart LR
-  K["Репка Pi 4 / камера"] -->|OpenAI-compatible API| W["Open WebUI"]
-  W --> L["llama.cpp / Qwen 27B"]
-  K -->|HTTPS / JPEG| V["VISION / FastAPI"]
-  V --> P["PostgreSQL"]
-  V --> S["Файловое хранилище"]
-  U["Пользователи лаборатории"] --> G["GPU Manager — отдельный сервер"]
-  G --> Q["Qwen VL 8B"]
-  G --> O["Ollama"]
-  G --> C["ComfyUI"]
-```
+![Архитектура Local LLM Servers на ALT Linux p11](docs/images/architecture.svg)
 
 ## Состояние на 26.11.2026
 
 | Компонент | Состояние |
 |---|---|
-| Debian 13: Qwen VL, Ollama, ComfyUI, GPU Manager | Ранее развёрнут; текущий статус требует уточнения |
+| LLM-1: Qwen VL, Ollama, ComfyUI, GPU Manager | Ранее развёрнут на Debian 13; целевая схема — ALT Linux p11, фактический переход не проверен |
 | ALT Server 11.1: Qwen 27B, Open WebUI | Работает |
-| Репка Pi 4: сетевой API и авторизация | Подтверждены |
+| Репка Pi 4 (ALT Linux p11): сетевой API и авторизация | Подтверждены |
 | Текстовый ответ через API | Генерация подтверждена; короткий финальный ответ без thinking ещё не проверен |
 | VISION: FastAPI, PostgreSQL, HTTPS | Прототип установщика; развёртывание не подтверждено |
 | Анализ фотографий нейросетью на новом сервере | Планируется |
