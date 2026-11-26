@@ -1,0 +1,26 @@
+[Unit]
+Description=Qwen 27B LLM Server
+After=network.target
+RequiresMountsFor=/srv/ai
+
+[Service]
+Type=simple
+User=sa
+WorkingDirectory=/srv/ai/software/llama.cpp
+Environment="CUDA_VISIBLE_DEVICES=0"
+ExecStart=/srv/ai/software/llama.cpp/build/bin/llama-server \
+    --model /srv/ai/models/llm/Qwen3.8-27B-Q4_K_M.gguf \
+    --mmproj /srv/ai/models/vision/mmproj-Qwen3.8-27B-Q8_0.gguf \
+    --no-mmproj-offload \
+    --n-gpu-layers 18 \
+    --threads 10 \
+    --threads-batch 12 \
+    --ctx-size 8192 \
+    --parallel 1 \
+    --host 127.0.0.1 \
+    --port 8082
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
